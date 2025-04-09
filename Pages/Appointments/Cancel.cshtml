@@ -1,0 +1,19 @@
+@page "{id:int}"
+@model HealthcareBookingSystem.Pages.Appointments.CancelModel
+@{
+    ViewData["Title"] = "Cancel Appointment";
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 class="mb-3">Cancel Appointment</h1>
+@if (Model.Appointment != null)
+{
+    <div class="alert alert-success">
+        <p>Appointment with @Model.Appointment.Doctor.Name on @Model.Appointment.AppointmentDate.ToString("g") has been cancelled successfully.</p>
+        <a class="btn btn-primary" asp-page="/Appointments/MyBookings">Back to My Bookings</a>
+    </div>
+}
+else if (TempData["Error"] != null)
+{
+    <p class="text-danger">@TempData["Error"]</p>
+}

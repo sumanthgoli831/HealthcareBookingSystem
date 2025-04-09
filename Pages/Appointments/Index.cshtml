@@ -1,0 +1,32 @@
+@page
+@model HealthcareBookingSystem.Pages.Appointments.IndexModel
+@{
+    ViewData["Title"] = "Book an Appointment";
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 class="mb-3">Available Doctors</h1>
+@if (TempData["Message"] != null)
+{
+    <p class="text-success">@TempData["Message"]</p>
+}
+<p>Logged in: @(User.Identity?.IsAuthenticated ?? false)</p>
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Specialty</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var doctor in Model.Doctors)
+        {
+            <tr>
+                <td>@doctor.Name</td>
+                <td>@doctor.Specialty</td>
+                <td><a class="btn btn-primary" asp-page="./Book" asp-route-id="@doctor.Id">Book</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

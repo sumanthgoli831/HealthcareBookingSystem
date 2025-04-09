@@ -1,0 +1,60 @@
+@page "{id:int}"
+@model HealthcareBookingSystem.Pages.Appointments.BookModel
+@{
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+@if (Model.Doctor != null)
+{
+    <h1 class="mb-3">Book Appointment with @Model.Doctor.Name</h1>
+    <p class="text-info">Available: @Model.Doctor.AvailableStartTime.ToString("hh\\:mm") to @Model.Doctor.AvailableEndTime.ToString("hh\\:mm")</p>
+
+    <form method="post" class="form-group">
+        <input type="hidden" asp-for="@Model.Doctor.Id" />
+        <div class="mb-3">
+            <label class="form-label">Date and Time:</label>
+            <input type="datetime-local" asp-for="AppointmentDate" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" class="form-control" required />
+            <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Patient Name:</label>
+            <input asp-for="PatientName" class="form-control" required />
+            <span asp-validation-for="PatientName" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Age:</label>
+            <input asp-for="Age" type="number" class="form-control" required />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Sex:</label>
+            <select asp-for="Sex" class="form-control" required>
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+            <span asp-validation-for="Sex" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Contact Number:</label>
+            <input asp-for="ContactNumber" class="form-control" required />
+            <span asp-validation-for="ContactNumber" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Address:</label>
+            <textarea asp-for="Address" class="form-control" required></textarea>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Reason for Appointment:</label>
+            <textarea asp-for="Reason" class="form-control" required></textarea>
+            <span asp-validation-for="Reason" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-success">Book</button>
+    </form>
+}
+else
+{
+    <h1 class="text-danger">Doctor not found</h1>
+}

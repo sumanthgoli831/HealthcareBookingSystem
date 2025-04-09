@@ -1,0 +1,63 @@
+@page
+@model HealthcareBookingSystem.Pages.Appointments.MyBookingsModel
+@{
+    ViewData["Title"] = "My Bookings";
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 class="mb-3">My Bookings</h1>
+@if (TempData["Message"] != null)
+{
+    <p class="text-success">@TempData["Message"]</p>
+}
+@if (TempData["Error"] != null)
+{
+    <p class="text-danger">@TempData["Error"]</p>
+}
+@if (Model.Appointments.Any())
+{
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Doctor</th>
+                <th>Date</th>
+                <th>Patient Name</th>
+                <th>Age</th>
+                <th>Sex</th>
+                <th>Contact</th>
+                <th>Address</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model.Appointments)
+            {
+                <tr>
+                    <td>@appointment.Doctor.Name</td>
+                    <td>@appointment.AppointmentDate.ToString("g")</td>
+                    <td>@appointment.PatientName</td>
+                    <td>@appointment.Age</td>
+                    <td>@appointment.Sex</td>
+                    <td>@appointment.ContactNumber</td>
+                    <td>@appointment.Address</td>
+                    <td>@appointment.Reason</td>
+                    <td>@(appointment.IsBooked ? "Confirmed" : "Cancelled")</td>
+                    <td>
+                        @if (appointment.IsBooked)
+                        {
+                            <form method="post" asp-page="/Appointments/Cancel" asp-route-id="@appointment.Id">
+                                <button type="submit" class="btn btn-danger">Cancel</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No bookings found.</p>
+}
